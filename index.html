@@ -1,47 +1,1211 @@
-<!-- Book 5 -->
-<div class="book-card">
-    <div class="book-header">
-        <div class="book-level en-text">Level 5</div>
-        <div class="book-level karen-text hidden">ဒိၣ် 5</div>
-        <div class="book-title">Master Level</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ms. [Your Name]'s Piano Studio - Alfred Lesson Books</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c1810;
+            --accent: #c9a96e;
+            --accent-light: #e8d5b7;
+            --bg: #faf8f5;
+            --card: #ffffff;
+            --text: #333;
+            --text-light: #666;
+            --border: #e0d5c8;
+            --shadow: 0 4px 20px rgba(44, 24, 16, 0.08);
+            --radius: 12px;
+        }
+
+        [data-theme="dark"] {
+            --primary: #1a0f0a;
+            --bg: #1a1512;
+            --card: #2a2018;
+            --text: #e8ddd0;
+            --text-light: #a89888;
+            --border: #3a3028;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* S'gaw Karen Font Support */
+        @font-face {
+            font-family: 'Karen';
+            src: local('Karen'), local('Padauk');
+        }
+
+        .karen-text {
+            font-family: 'Padauk', 'Karen', sans-serif;
+            line-height: 1.8;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #4a2c1a 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '♪ ♫ ♬ ♭ ♮ ♯';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            opacity: 0.15;
+            letter-spacing: 10px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.95);
+            padding: 8px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            background: transparent;
+            color: var(--text);
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: var(--accent-light);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 180px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--card);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            border: 2px solid var(--border);
+            background: transparent;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Book Cards */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .book-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(44, 24, 16, 0.12);
+        }
+
+        .book-header {
+            background: linear-gradient(135deg, var(--accent) 0%, #b8945f 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .book-level {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+
+        .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-content {
+            padding: 1.5rem;
+        }
+
+        .playlist-embed {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #000;
+        }
+
+        .playlist-embed iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .song-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            background: var(--bg);
+        }
+
+        .song-list h4 {
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .song-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .song-item:last-child {
+            border-bottom: none;
+        }
+
+        .song-number {
+            background: var(--accent-light);
+            color: var(--primary);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tool-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .tool-link {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .tool-link:hover {
+            background: var(--primary);
+        }
+
+        /* Metronome Tool */
+        .metronome-container {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .metronome-display {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 1rem 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .metronome-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .metro-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .metro-btn:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .metro-btn.active {
+            background: #e74c3c;
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .bpm-slider {
+            width: 200px;
+            accent-color: var(--accent);
+        }
+
+        /* Practice Log */
+        .practice-log {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .practice-form {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .practice-form input, .practice-form select, .practice-form textarea {
+            padding: 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .practice-form button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .practice-form button:hover {
+            background: var(--primary);
+        }
+
+        .log-entries {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .log-entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .log-entry-date {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .book-grid { grid-template-columns: 1fr; }
+            .lang-toggle { top: 10px; right: 10px; }
+            .theme-toggle { top: 10px; right: 150px; }
+        }
+
+        /* Hidden class for language switching */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLanguage('en')" id="btn-en">English</button>
+        <button class="lang-btn" onclick="setLanguage('karen')" id="btn-karen">S'gaw Karen</button>
     </div>
-    <div class="book-content">
-        <div class="playlist-embed">
-            <iframe src="https://www.youtube.com/embed/videoseries?list=PLck-BRI8MDg1puWwMdsYx3ahoJ0Fo0pUm" 
-                    title="Alfred 5 Playlist" allowfullscreen loading="lazy"></iframe>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">🌙</button>
+
+    <!-- Header -->
+    <header>
+        <h1 class="en-text">🎹 Piano Studio</h1>
+        <h1 class="karen-text hidden">🎹 ပိဿၢ်ဃးဒိၣ်</h1>
+        <p class="subtitle en-text">Alfred Piano Lesson Books 1A–5 | 25 Students Strong</p>
+        <p class="subtitle karen-text hidden">Alfred ပိဿၢ်ဃးဒိၣ် 1A–5 | 25 ဂၤဒိၣ်</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSection('books')">
+                <span class="en-text">📚 Lesson Books</span>
+                <span class="karen-text hidden">📚 ပိဿၢ်ဃးဒိၣ်</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('tools')">
+                <span class="en-text">🛠️ Student Tools</span>
+                <span class="karen-text hidden">🛠️ ဂၤဒိၣ်တၢ်ကိၢ်</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('practice')">
+                <span class="en-text">📝 Practice Log</span>
+                <span class="karen-text hidden">📝 တၢ်ဃးဒိၣ်</span>
+            </button>
         </div>
-        <div class="song-list">
-            <h4 class="en-text">Songs in this Book:</h4>
-            <h4 class="karen-text hidden">ပိဿၢ်ဃးဒိၣ်:</h4>
-            <div class="song-item"><span class="song-number">1</span><span>Brazilian Holiday</span></div>
-            <div class="song-item"><span class="song-number">2</span><span>Scene from Swan Lake</span></div>
-            <div class="song-item"><span class="song-number">3</span><span>Minuet</span></div>
-            <div class="song-item"><span class="song-number">4</span><span>Bagatelle</span></div>
-            <div class="song-item"><span class="song-number">5</span><span>Sonatina on Three French Folk Songs I: Alouette</span></div>
-            <div class="song-item"><span class="song-number">6</span><span>Sonatina on Three French Folk Songs II: Au Claire De Lune</span></div>
-            <div class="song-item"><span class="song-number">7</span><span>Sonatina on Three French Folk Songs III: Sur Le Pont D'Avignon</span></div>
-            <div class="song-item"><span class="song-number">8</span><span>Theme</span></div>
-            <div class="song-item"><span class="song-number">9</span><span>Rondeau</span></div>
-            <div class="song-item"><span class="song-number">10</span><span>Sonatina No.1, First Movement</span></div>
-            <div class="song-item"><span class="song-number">11</span><span>Tailor's Song</span></div>
-            <div class="song-item"><span class="song-number">12</span><span>Spanish Dance</span></div>
-            <div class="song-item"><span class="song-number">13</span><span>Little Prelude in C</span></div>
-            <div class="song-item"><span class="song-number">14</span><span>A Very Special Day</span></div>
-            <div class="song-item"><span class="song-number">15</span><span>Magic Carpet Ride</span></div>
-            <div class="song-item"><span class="song-number">16</span><span>Shall We Gather at the River</span></div>
-            <div class="song-item"><span class="song-number">17</span><span>A Miniature Overture</span></div>
-            <div class="song-item"><span class="song-number">18</span><span>Sonata in the Style of Scarlatti</span></div>
-            <div class="song-item"><span class="song-number">19</span><span>Loch Lomond</span></div>
-            <div class="song-item"><span class="song-number">20</span><span>Aria from Marriage of Figaro</span></div>
-            <div class="song-item"><span class="song-number">21</span><span>Variations on a Sea Chanty</span></div>
-            <div class="song-item"><span class="song-number">22</span><span>Prelude in C Minor</span></div>
-            <div class="song-item"><span class="song-number">23</span><span>Ballade</span></div>
-        </div>
-        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="en-text">
-            <strong>Note:</strong> Playlist by keyofw on YouTube.
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="karen-text hidden">
-            <strong>မှာထီ:</strong> YouTube keyofw
-        </p>
+    </nav>
+
+    <div class="container">
+        <!-- Books Section -->
+        <section id="books-section">
+            <h2 class="section-title en-text">Alfred Piano Lesson Books</h2>
+            <h2 class="section-title karen-text hidden">Alfred ပိဿၢ်ဃးဒိၣ်</h2>
+
+            <div class="book-grid">
+                <!-- Book 1A -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-level en-text">Level 1A</div>
+                        <div class="book-level karen-text hidden">ဒိၣ် 1A</div>
+                        <div class="book-title">Beginning Basics</div>
+                    </div>
+                    <div class="book-content">
+                        <div class="playlist-embed">
+                            <iframe src="https://www.youtube.com/embed/videoseries?list=PLcGqJ2C7_9yE4a1Y1Y1Y1Y1Y1Y1Y1Y1Y1" 
+                                    title="Alfred 1A Playlist" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="song-list">
+                            <h4 class="en-text">Songs in this Book:</h4>
+                            <h4 class="karen-text hidden">ပိဿၢ်ဃးဒိၣ်:</h4>
+                            <div class="song-item"><span class="song-number">1</span><span>Right & Left</span></div>
+                            <div class="song-item"><span class="song-number">2</span><span>Merrily We Roll Along / O'er the Deep Blue Sea</span></div>
+                            <div class="song-item"><span class="song-number">3</span><span>Hand-Bells</span></div>
+                            <div class="song-item"><span class="song-number">4</span><span>Jolly Old Saint Nicholas</span></div>
+                            <div class="song-item"><span class="song-number">5</span><span>Old MacDonald</span></div>
+                            <div class="song-item"><span class="song-number">6</span><span>Batter Up!</span></div>
+                            <div class="song-item"><span class="song-number">7</span><span>My Clever Pup</span></div>
+                            <div class="song-item"><span class="song-number">8</span><span>The Zoo</span></div>
+                            <div class="song-item"><span class="song-number">9</span><span>Playing in a New Position</span></div>
+                            <div class="song-item"><span class="song-number">10</span><span>Sailing</span></div>
+                            <div class="song-item"><span class="song-number">11</span><span>Skating</span></div>
+                            <div class="song-item"><span class="song-number">12</span><span>Wishing Well</span></div>
+                            <div class="song-item"><span class="song-number">13</span><span>Rain, Rain!</span></div>
+                            <div class="song-item"><span class="song-number">14</span><span>A Happy Song</span></div>
+                            <div class="song-item"><span class="song-number">15</span><span>Position C</span></div>
+                            <div class="song-item"><span class="song-number">16</span><span>See-Saws</span></div>
+                            <div class="song-item"><span class="song-number">17</span><span>Just a Second!</span></div>
+                            <div class="song-item"><span class="song-number">18</span><span>Balloons</span></div>
+                            <div class="song-item"><span class="song-number">19</span><span>Who's on Third?</span></div>
+                            <div class="song-item"><span class="song-number">20</span><span>Mexican Hat Dance</span></div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="en-text">
+                            <strong>Note:</strong> Create a YouTube playlist with these songs and replace the embed URL above with your playlist ID.
+                        </p>
+                        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="karen-text hidden">
+                            <strong>မှာထီ:</strong> YouTube playlist တၢ်ကိၢ်ဒီးတၢ်အိၣ်တၢ်သးတၢ်ဃးဒိၣ်
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Book 1B -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-level en-text">Level 1B</div>
+                        <div class="book-level karen-text hidden">ဒိၣ် 1B</div>
+                        <div class="book-title">Building Foundations</div>
+                    </div>
+                    <div class="book-content">
+                        <div class="playlist-embed">
+                            <iframe src="https://www.youtube.com/embed/videoseries?list=PLcGqJ2C7_9yE4a1Y1Y1Y1Y1Y1Y1Y1Y1Y2" 
+                                    title="Alfred 1B Playlist" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="song-list">
+                            <h4 class="en-text">Songs in this Book:</h4>
+                            <h4 class="karen-text hidden">ပိဿၢ်ဃးဒိၣ်:</h4>
+                            <div class="song-item"><span class="song-number">1</span><span>Step Right Up!</span></div>
+                            <div class="song-item"><span class="song-number">2</span><span>The Carousel</span></div>
+                            <div class="song-item"><span class="song-number">3</span><span>Hail to Thee, America!</span></div>
+                            <div class="song-item"><span class="song-number">4</span><span>Brother John</span></div>
+                            <div class="song-item"><span class="song-number">5</span><span>Good Sounds</span></div>
+                            <div class="song-item"><span class="song-number">6</span><span>The Cuckoo</span></div>
+                            <div class="song-item"><span class="song-number">7</span><span>Money Can't Buy Ev'rything!</span></div>
+                            <div class="song-item"><span class="song-number">8</span><span>Ping-Pong</span></div>
+                            <div class="song-item"><span class="song-number">9</span><span>Grandpa's Clock</span></div>
+                            <div class="song-item"><span class="song-number">10</span><span>When the Saints Go Marching In</span></div>
+                            <div class="song-item"><span class="song-number">11</span><span>G's in the "BAG"</span></div>
+                            <div class="song-item"><span class="song-number">12</span><span>Join the Fun</span></div>
+                            <div class="song-item"><span class="song-number">13</span><span>Oom-Pa-pa!</span></div>
+                            <div class="song-item"><span class="song-number">14</span><span>The Clown</span></div>
+                            <div class="song-item"><span class="song-number">15</span><span>Thumbs on C!</span></div>
+                            <div class="song-item"><span class="song-number">16</span><span>Waltz Time</span></div>
+                            <div class="song-item"><span class="song-number">17</span><span>Good King Wenceslas</span></div>
+                            <div class="song-item"><span class="song-number">18</span><span>The Rainbow</span></div>
+                            <div class="song-item"><span class="song-number">19</span><span>Good Morning to You!</span></div>
+                            <div class="song-item"><span class="song-number">20</span><span>Happy Birthday to You!</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-level en-text">Level 2</div>
+                        <div class="book-level karen-text hidden">ဒိၣ် 2</div>
+                        <div class="book-title">Expanding Skills</div>
+                    </div>
+                    <div class="book-content">
+                        <div class="playlist-embed">
+                            <iframe src="https://www.youtube.com/embed/videoseries?list=PLcGqJ2C7_9yE4a1Y1Y1Y1Y1Y1Y1Y1Y1Y3" 
+                                    title="Alfred 2 Playlist" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="song-list">
+                            <h4 class="en-text">Songs in this Book:</h4>
+                            <h4 class="karen-text hidden">ပိဿၢ်ဃးဒိၣ်:</h4>
+                            <div class="song-item"><span class="song-number">1</span><span>Yankee Doodle</span></div>
+                            <div class="song-item"><span class="song-number">2</span><span>The Windmill</span></div>
+                            <div class="song-item"><span class="song-number">3</span><span>Indians</span></div>
+                            <div class="song-item"><span class="song-number">4</span><span>New Position G</span></div>
+                            <div class="song-item"><span class="song-number">5</span><span>Pedal Play</span></div>
+                            <div class="song-item"><span class="song-number">6</span><span>Harp Song</span></div>
+                            <div class="song-item"><span class="song-number">7</span><span>Concert Time</span></div>
+                            <div class="song-item"><span class="song-number">8</span><span>Music Box Rock</span></div>
+                            <div class="song-item"><span class="song-number">9</span><span>A Cowboy's Song</span></div>
+                            <div class="song-item"><span class="song-number">10</span><span>The Magic Man</span></div>
+                            <div class="song-item"><span class="song-number">11</span><span>The Greatest Show on Earth!</span></div>
+                            <div class="song-item"><span class="song-number">12</span><span>The Whirlwind</span></div>
+                            <div class="song-item"><span class="song-number">13</span><span>The Planets</span></div>
+                            <div class="song-item"><span class="song-number">14</span><span>C Major Scale Piece</span></div>
+                            <div class="song-item"><span class="song-number">15</span><span>G Major Scale Piece</span></div>
+                            <div class="song-item"><span class="song-number">16</span><span>Carol in G Major</span></div>
+                            <div class="song-item"><span class="song-number">17</span><span>The Same Carol in C Major</span></div>
+                            <div class="song-item"><span class="song-number">18</span><span>French Lullaby</span></div>
+                            <div class="song-item"><span class="song-number">19</span><span>Sonatina</span></div>
+                            <div class="song-item"><span class="song-number">20</span><span>When Our Band Goes Marching By!</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-level en-text">Level 3</div>
+                        <div class="book-level karen-text hidden">ဒိၣ် 3</div>
+                        <div class="book-title">Intermediate Studies</div>
+                    </div>
+                    <div class="book-content">
+                        <div class="playlist-embed">
+                            <iframe src="https://www.youtube.com/embed/videoseries?list=PLwooLmMfofqRpIPnAKzkyylB4nFfGcSQl" 
+                                    title="Alfred 3 Playlist" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="song-list">
+                            <h4 class="en-text">Songs in this Book:</h4>
+                            <h4 class="karen-text hidden">ပိဿၢ်ဃးဒိၣ်:</h4>
+                            <div class="song-item"><span class="song-number">1</span><span>Goodbye, Old Paint</span></div>
+                            <div class="song-item"><span class="song-number">2</span><span>On Top of Old Smoky</span></div>
+                            <div class="song-item"><span class="song-number">3</span><span>Festive March</span></div>
+                            <div class="song-item"><span class="song-number">4</span><span>Alpine Melody</span></div>
+                            <div class="song-item"><span class="song-number">5</span><span>Waltz Pantomime</span></div>
+                            <div class="song-item"><span class="song-number">6</span><span>Light and Blue</span></div>
+                            <div class="song-item"><span class="song-number">7</span><span>Roman Holiday</span></div>
+                            <div class="song-item"><span class="song-number">8</span><span>Prelude in 18th Century Style</span></div>
+                            <div class="song-item"><span class="song-number">9</span><span>Village Dance</span></div>
+                            <div class="song-item"><span class="song-number">10</span><span>Casey Jones</span></div>
+                            <div class="song-item"><span class="song-number">11</span><span>A Day in Vienna</span></div>
+                            <div class="song-item"><span class="song-number">12</span><span>Enchanted City</span></div>
+                            <div class="song-item"><span class="song-number">13</span><span>Make Up Your Mind!</span></div>
+                            <div class="song-item"><span class="song-number">14</span><span>The Major and the Minor (A Bugle Call Tune)</span></div>
+                            <div class="song-item"><span class="song-number">15</span><span>Greensleeves</span></div>
+                            <div class="song-item"><span class="song-number">16</span><span>Fandango</span></div>
+                            <div class="song-item"><span class="song-number">17</span><span>Go Down, Moses</span></div>
+                            <div class="song-item"><span class="song-number">18</span><span>Intermezzo</span></div>
+                            <div class="song-item"><span class="song-number">19</span><span>Scarborough Fair</span></div>
+                            <div class="song-item"><span class="song-number">20</span><span>Raisins and Almonds</span></div>
+                            <div class="song-item"><span class="song-number">21</span><span>Hunting Song</span></div>
+                            <div class="song-item"><span class="song-number">22</span><span>La Raspa (A Mexican Stamping Dance)</span></div>
+                            <div class="song-item"><span class="song-number">23</span><span>Scherzo</span></div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="en-text">
+                            <strong>Note:</strong> Playlist by Amy's Piano Studio 2 on YouTube.
+                        </p>
+                        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="karen-text hidden">
+                            <strong>မှာထီ:</strong> YouTube Amy's Piano Studio 2
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-level en-text">Level 4</div>
+                        <div class="book-level karen-text hidden">ဒိၣ် 4</div>
+                        <div class="book-title">Advanced Techniques</div>
+                    </div>
+                    <div class="book-content">
+                        <div class="playlist-embed">
+                            <iframe src="https://www.youtube.com/embed/videoseries?list=PLcGqJ2C7_9yE4a1Y1Y1Y1Y1Y1Y1Y1Y1Y5" 
+                                    title="Alfred 4 Playlist" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="song-list">
+                            <h4 class="en-text">Songs in this Book:</h4>
+                            <h4 class="karen-text hidden">ပိဿၢ်ဃးဒိၣ်:</h4>
+                            <div class="song-item"><span class="song-number">1</span><span>Alouette</span></div>
+                            <div class="song-item"><span class="song-number">2</span><span>Allegro in A Major</span></div>
+                            <div class="song-item"><span class="song-number">3</span><span>Autumn Ballad</span></div>
+                            <div class="song-item"><span class="song-number">4</span><span>Bluegrass Special</span></div>
+                            <div class="song-item"><span class="song-number">5</span><span>The Butterfly</span></div>
+                            <div class="song-item"><span class="song-number">6</span><span>Capriccio</span></div>
+                            <div class="song-item"><span class="song-number">7</span><span>Chinese Lanterns</span></div>
+                            <div class="song-item"><span class="song-number">8</span><span>Country Gardens</span></div>
+                            <div class="song-item"><span class="song-number">9</span><span>Divertimento</span></div>
+                            <div class="song-item"><span class="song-number">10</span><span>Dream Echoes</span></div>
+                            <div class="song-item"><span class="song-number">11</span><span>Fanfare</span></div>
+                            <div class="song-item"><span class="song-number">12</span><span>Folk Dance</span></div>
+                            <div class="song-item"><span class="song-number">13</span><span>Goldfish</span></div>
+                            <div class="song-item"><span class="song-number">14</span><span>Happy Holiday</span></div>
+                            <div class="song-item"><span class="song-number">15</span><span>Interlude</span></div>
+                            <div class="song-item"><span class="song-number">16</span><span>Magic Flute</span></div>
+                            <div class="song-item"><span class="song-number">17</span><span>Minuet in G</span></div>
+                            <div class="song-item"><span class="song-number">18</span><span>Morning Has Broken</span></div>
+                            <div class="song-item"><span class="song-number">19</span><span>Nocturne</span></div>
+                            <div class="song-item"><span class="song-number">20</span><span>Prelude in C Major</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 5 -->
+                <div class="book-card">
+                    <div class="book-header">
+                        <div class="book-level en-text">Level 5</div>
+                        <div class="book-level karen-text hidden">ဒိၣ် 5</div>
+                        <div class="book-title">Master Level</div>
+                    </div>
+                    <div class="book-content">
+                        <div class="playlist-embed">
+                            <iframe src="https://www.youtube.com/embed/videoseries?list=PLck-BRI8MDg1puWwMdsYx3ahoJ0Fo0pUm" 
+                                    title="Alfred 5 Playlist" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                        <div class="song-list">
+                            <h4 class="en-text">Songs in this Book:</h4>
+                            <h4 class="karen-text hidden">ပိဿၢ်ဃးဒိၣ်:</h4>
+                            <div class="song-item"><span class="song-number">1</span><span>Brazilian Holiday</span></div>
+                            <div class="song-item"><span class="song-number">2</span><span>Scene from Swan Lake</span></div>
+                            <div class="song-item"><span class="song-number">3</span><span>Minuet</span></div>
+                            <div class="song-item"><span class="song-number">4</span><span>Bagatelle</span></div>
+                            <div class="song-item"><span class="song-number">5</span><span>Sonatina on Three French Folk Songs I: Alouette</span></div>
+                            <div class="song-item"><span class="song-number">6</span><span>Sonatina on Three French Folk Songs II: Au Claire De Lune</span></div>
+                            <div class="song-item"><span class="song-number">7</span><span>Sonatina on Three French Folk Songs III: Sur Le Pont D'Avignon</span></div>
+                            <div class="song-item"><span class="song-number">8</span><span>Theme</span></div>
+                            <div class="song-item"><span class="song-number">9</span><span>Rondeau</span></div>
+                            <div class="song-item"><span class="song-number">10</span><span>Sonatina No.1, First Movement</span></div>
+                            <div class="song-item"><span class="song-number">11</span><span>Tailor's Song</span></div>
+                            <div class="song-item"><span class="song-number">12</span><span>Spanish Dance</span></div>
+                            <div class="song-item"><span class="song-number">13</span><span>Little Prelude in C</span></div>
+                            <div class="song-item"><span class="song-number">14</span><span>A Very Special Day</span></div>
+                            <div class="song-item"><span class="song-number">15</span><span>Magic Carpet Ride</span></div>
+                            <div class="song-item"><span class="song-number">16</span><span>Shall We Gather at the River</span></div>
+                            <div class="song-item"><span class="song-number">17</span><span>A Miniature Overture</span></div>
+                            <div class="song-item"><span class="song-number">18</span><span>Sonata in the Style of Scarlatti</span></div>
+                            <div class="song-item"><span class="song-number">19</span><span>Loch Lomond</span></div>
+                            <div class="song-item"><span class="song-number">20</span><span>Aria from Marriage of Figaro</span></div>
+                            <div class="song-item"><span class="song-number">21</span><span>Variations on a Sea Chanty</span></div>
+                            <div class="song-item"><span class="song-number">22</span><span>Prelude in C Minor</span></div>
+                            <div class="song-item"><span class="song-number">23</span><span>Ballade</span></div>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="en-text">
+                            <strong>Note:</strong> Playlist by keyofw on YouTube.
+                        </p>
+                        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);" class="karen-text hidden">
+                            <strong>မှာထီ:</strong> YouTube keyofw
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section id="tools-section" class="hidden">
+            <h2 class="section-title en-text">🛠️ Student Practice Tools</h2>
+            <h2 class="section-title karen-text hidden">🛠️ ဂၤဒိၣ်တၢ်ကိၢ်</h2>
+
+            <!-- Metronome -->
+            <div class="metronome-container">
+                <h3 class="en-text">Metronome</h3>
+                <h3 class="karen-text hidden">Metronome</h3>
+                <div class="metronome-display" id="bpm-display">60</div>
+                <div class="metronome-controls">
+                    <button class="metro-btn" onclick="adjustBPM(-5)">−</button>
+                    <input type="range" class="bpm-slider" id="bpm-slider" min="40" max="208" value="60" oninput="updateBPM(this.value)">
+                    <button class="metro-btn" onclick="adjustBPM(5)">+</button>
+                    <button class="metro-btn" id="play-btn" onclick="toggleMetronome()">▶</button>
+                </div>
+                <p style="color: var(--text-light); font-size: 0.9rem;" class="en-text">BPM (Beats Per Minute)</p>
+                <p style="color: var(--text-light); font-size: 0.9rem;" class="karen-text hidden">BPM (တၢ်ဃးဒိၣ်တၢ်ကိၢ်)</p>
+            </div>
+
+            <!-- External Tools Grid -->
+            <div class="tools-section">
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon">🎼</div>
+                        <h3 class="en-text">MusicTheory.net</h3>
+                        <h3 class="karen-text hidden">MusicTheory.net</h3>
+                        <p class="en-text">Interactive lessons on note reading, key signatures, rhythm, and ear training exercises.</p>
+                        <p class="karen-text hidden">တၢ်ကိၢ်ပိဿၢ်ဃးဒိၣ်၊ key signatures, rhythm, ear training</p>
+                        <a href="https://www.musictheory.net" target="_blank" class="tool-link">Visit Site →</a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🎹</div>
+                        <h3 class="en-text">Virtual Piano</h3>
+                        <h3 class="karen-text hidden">Virtual Piano</h3>
+                        <p class="en-text">Practice on a virtual keyboard when away from your piano. Great for finger exercises.</p>
+                        <p class="karen-text hidden">တၢ်ဃးဒိၣ်တၢ်ကိၢ် virtual keyboard</p>
+                        <a href="https://virtualpiano.net" target="_blank" class="tool-link">Visit Site →</a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">📱</div>
+                        <h3 class="en-text">Tenuto App</h3>
+                        <h3 class="karen-text hidden">Tenuto App</h3>
+                        <p class="en-text">iOS/Android app for music theory exercises, chord identification, and interval training.</p>
+                        <p class="karen-text hidden">iOS/Android app music theory exercises</p>
+                        <a href="https://apps.apple.com/us/app/tenuto/id459313476" target="_blank" class="tool-link">App Store →</a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🎵</div>
+                        <h3 class="en-text">Sight Reading Factory</h3>
+                        <h3 class="karen-text hidden">Sight Reading Factory</h3>
+                        <p class="en-text">Generate unlimited sight-reading exercises customized to your skill level.</p>
+                        <p class="karen-text hidden">တၢ်ဃးဒိၣ် sight-reading exercises</p>
+                        <a href="https://www.sightreadingfactory.com" target="_blank" class="tool-link">Visit Site →</a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🎤</div>
+                        <h3 class="en-text">Perfect Ear</h3>
+                        <h3 class="karen-text hidden">Perfect Ear</h3>
+                        <p class="en-text">Ear training app for interval recognition, chord progressions, and scale identification.</p>
+                        <p class="karen-text hidden">Ear training app interval recognition</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.evilduck.musiciankit" target="_blank" class="tool-link">Google Play →</a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">📹</div>
+                        <h3 class="en-text">Slow Down Music</h3>
+                        <h3 class="karen-text hidden">Slow Down Music</h3>
+                        <p class="en-text">Change speed of YouTube videos without changing pitch. Perfect for learning difficult passages.</p>
+                        <p class="karen-text hidden">YouTube videos တၢ်ဃးဒိၣ် slow down</p>
+                        <a href="https://www.youtube.com/slowdown" target="_blank" class="tool-link">YouTube Feature →</a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">📝</div>
+                        <h3 class="en-text">Blank Sheet Music</h3>
+                        <h3 class="karen-text hidden">Blank Sheet Music</h3>
+                        <p class="en-text">Printable blank staff paper for composition and theory exercises.</p>
+                        <p class="karen-text hidden">Blank staff paper တၢ်ဃးဒိၣ်</p>
+                        <a href="https://www.blanksheetmusic.net" target="_blank" class="tool-link">Print Paper →</a>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🎧</div>
+                        <h3 class="en-text">Tone.js Piano</h3>
+                        <h3 class="karen-text hidden">Tone.js Piano</h3>
+                        <p class="en-text">Browser-based piano with accurate sound synthesis for ear training and reference.</p>
+                        <p class="karen-text hidden">Browser-based piano ear training</p>
+                        <a href="https://tonejs.github.io/examples/sampler" target="_blank" class="tool-link">Try It →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Log Section -->
+        <section id="practice-section" class="hidden">
+            <div class="practice-log">
+                <h2 class="section-title en-text">📝 Practice Log</h2>
+                <h2 class="section-title karen-text hidden">📝 တၢ်ဃးဒိၣ်</h2>
+
+                <div class="practice-form">
+                    <input type="text" id="student-name" placeholder="Your Name" class="en-text">
+                    <input type="text" id="student-name-karen" placeholder="နာ်မံၤ" class="karen-text hidden">
+                    <select id="book-select">
+                        <option value="1A">Book 1A</option>
+                        <option value="1B">Book 1B</option>
+                        <option value="2">Book 2</option>
+                        <option value="3">Book 3</option>
+                        <option value="4">Book 4</option>
+                        <option value="5">Book 5</option>
+                    </select>
+                    <input type="number" id="practice-minutes" placeholder="Minutes practiced" min="1">
+                    <textarea id="practice-notes" placeholder="What did you practice? (songs, exercises, etc.)" rows="3" class="en-text"></textarea>
+                    <textarea id="practice-notes-karen" placeholder="နာ်ဃးဒိၣ်တၢ်ကိၢ်?" rows="3" class="karen-text hidden"></textarea>
+                    <button onclick="addPracticeLog()" class="en-text">Add Entry</button>
+                    <button onclick="addPracticeLog()" class="karen-text hidden">တၢ်ကိၢ်</button>
+                </div>
+
+                <div class="log-entries" id="log-entries">
+                    <!-- Entries will be added here -->
+                </div>
+
+                <div style="margin-top: 1rem; text-align: center;">
+                    <button onclick="exportLog()" class="tool-link" style="border: none; cursor: pointer;">
+                        <span class="en-text">📥 Export Log</span>
+                        <span class="karen-text hidden">📥 Export Log</span>
+                    </button>
+                    <button onclick="clearLog()" class="tool-link" style="border: none; cursor: pointer; margin-left: 0.5rem; background: #e74c3c;">
+                        <span class="en-text">Clear All</span>
+                        <span class="karen-text hidden">Clear All</span>
+                    </button>
+                </div>
+            </div>
+        </section>
     </div>
-</div>
+
+    <footer>
+        <p class="en-text">© 2026 Piano Studio | Alfred Piano Lesson Books 1A-5 | All students welcome</p>
+        <p class="karen-text hidden">© 2026 ပိဿၢ်ဃးဒိၣ် | Alfred ပိဿၢ်ဃးဒိၣ် 1A-5 | ဂၤဒိၣ်တၢ်ကိၢ်</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;" class="en-text">
+            Contact your teacher for lesson scheduling and questions
+        </p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;" class="karen-text hidden">
+            ပိဿၢ်ဃးဒိၣ်တၢ်ကိၢ် teacher
+        </p>
+    </footer>
+
+    <script>
+        // Language Switching
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.en-text').forEach(el => {
+                el.classList.toggle('hidden', lang !== 'en');
+            });
+            document.querySelectorAll('.karen-text').forEach(el => {
+                el.classList.toggle('hidden', lang !== 'karen');
+            });
+
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-karen').classList.toggle('active', lang === 'karen');
+
+            // Update placeholders
+            if (lang === 'karen') {
+                document.getElementById('student-name').style.display = 'none';
+                document.getElementById('student-name-karen').style.display = 'block';
+                document.getElementById('practice-notes').style.display = 'none';
+                document.getElementById('practice-notes-karen').style.display = 'block';
+            } else {
+                document.getElementById('student-name').style.display = 'block';
+                document.getElementById('student-name-karen').style.display = 'none';
+                document.getElementById('practice-notes').style.display = 'block';
+                document.getElementById('practice-notes-karen').style.display = 'none';
+            }
+
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.toggleAttribute('data-theme', 'dark');
+            const isDark = document.body.hasAttribute('data-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.querySelector('.theme-toggle').textContent = isDark ? '☀️' : '🌙';
+        }
+
+        // Navigation
+        function showSection(section) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+            if (section === 'books') {
+                document.getElementById('books-section').classList.remove('hidden');
+                document.querySelectorAll('.nav-btn')[0].classList.add('active');
+            } else if (section === 'tools') {
+                document.getElementById('tools-section').classList.remove('hidden');
+                document.querySelectorAll('.nav-btn')[1].classList.add('active');
+            } else if (section === 'practice') {
+                document.getElementById('practice-section').classList.remove('hidden');
+                document.querySelectorAll('.nav-btn')[2].classList.add('active');
+            }
+        }
+
+        // Metronome
+        let metronomeInterval;
+        let isPlaying = false;
+        let audioContext;
+
+        function updateBPM(val) {
+            document.getElementById('bpm-display').textContent = val;
+            document.getElementById('bpm-slider').value = val;
+            if (isPlaying) {
+                clearInterval(metronomeInterval);
+                startMetronome();
+            }
+        }
+
+        function adjustBPM(delta) {
+            const slider = document.getElementById('bpm-slider');
+            let newVal = parseInt(slider.value) + delta;
+            if (newVal >= 40 && newVal <= 208) {
+                updateBPM(newVal);
+            }
+        }
+
+        function toggleMetronome() {
+            const btn = document.getElementById('play-btn');
+            if (isPlaying) {
+                clearInterval(metronomeInterval);
+                isPlaying = false;
+                btn.textContent = '▶';
+                btn.classList.remove('active');
+            } else {
+                startMetronome();
+                isPlaying = true;
+                btn.textContent = '⏸';
+                btn.classList.add('active');
+            }
+        }
+
+        function startMetronome() {
+            const bpm = parseInt(document.getElementById('bpm-slider').value);
+            const interval = 60000 / bpm;
+
+            if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            function tick() {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                osc.frequency.value = 1000;
+                osc.type = 'sine';
+                gain.gain.setValueAtTime(0.5, audioContext.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+                osc.start(audioContext.currentTime);
+                osc.stop(audioContext.currentTime + 0.05);
+            }
+
+            tick();
+            metronomeInterval = setInterval(tick, interval);
+        }
+
+        // Practice Log
+        let practiceLogs = JSON.parse(localStorage.getItem('practice-logs') || '[]');
+
+        function renderLogs() {
+            const container = document.getElementById('log-entries');
+            container.innerHTML = '';
+            practiceLogs.slice().reverse().forEach((log, index) => {
+                const entry = document.createElement('div');
+                entry.className = 'log-entry';
+                entry.innerHTML = `
+                    <div class="log-entry-header">
+                        <span>${log.name} - Book ${log.book}</span>
+                        <span>${log.minutes} min</span>
+                    </div>
+                    <div class="log-entry-date">${new Date(log.date).toLocaleString()}</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem;">${log.notes}</div>
+                    <button onclick="deleteLog(${practiceLogs.length - 1 - index})" style="margin-top: 0.5rem; background: #e74c3c; color: white; border: none; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">Delete</button>
+                `;
+                container.appendChild(entry);
+            });
+        }
+
+        function addPracticeLog() {
+            const name = currentLang === 'en' ? 
+                document.getElementById('student-name').value : 
+                document.getElementById('student-name-karen').value;
+            const book = document.getElementById('book-select').value;
+            const minutes = document.getElementById('practice-minutes').value;
+            const notes = currentLang === 'en' ? 
+                document.getElementById('practice-notes').value : 
+                document.getElementById('practice-notes-karen').value;
+
+            if (!name || !minutes) {
+                alert(currentLang === 'en' ? 'Please fill in your name and practice time' : 'နာ်မံၤဒီးတၢ်ဃးဒိၣ်');
+                return;
+            }
+
+            practiceLogs.push({
+                name,
+                book,
+                minutes,
+                notes,
+                date: new Date().toISOString()
+            });
+
+            localStorage.setItem('practice-logs', JSON.stringify(practiceLogs));
+            renderLogs();
+
+            // Clear form
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-name-karen').value = '';
+            document.getElementById('practice-minutes').value = '';
+            document.getElementById('practice-notes').value = '';
+            document.getElementById('practice-notes-karen').value = '';
+        }
+
+        function deleteLog(index) {
+            practiceLogs.splice(index, 1);
+            localStorage.setItem('practice-logs', JSON.stringify(practiceLogs));
+            renderLogs();
+        }
+
+        function exportLog() {
+            if (practiceLogs.length === 0) {
+                alert(currentLang === 'en' ? 'No logs to export' : 'တၢ်ဃးဒိၣ်တၢ်ကိၢ်');
+                return;
+            }
+
+            let csv = 'Date,Student,Book,Minutes,Notes\n';
+            practiceLogs.forEach(log => {
+                csv += `"${new Date(log.date).toLocaleString()}","${log.name}","${log.book}","${log.minutes}","${log.notes}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'practice-log.csv';
+            a.click();
+        }
+
+        function clearLog() {
+            if (confirm(currentLang === 'en' ? 'Clear all practice logs?' : 'တၢ်ဃးဒိၣ်တၢ်ကိၢ်?')) {
+                practiceLogs = [];
+                localStorage.removeItem('practice-logs');
+                renderLogs();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load saved language
+            const savedLang = localStorage.getItem('preferred-language');
+            if (savedLang) setLanguage(savedLang);
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.querySelector('.theme-toggle').textContent = '☀️';
+            }
+
+            renderLogs();
+        });
+    </script>
+</body>
+</html>
